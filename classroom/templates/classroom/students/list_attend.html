@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% include 'classroom/students/_header.html' with active='new' %}
+  <div><span class="badge badge-pill mt-1 badge-light text-dark  p-4" style="font-size: 15px;"> <i> Attendance list from <strong> {{date}} <i class="fa fa-share-square text-dark" aria-hidden="true"></i> {{date2}} </i>  </strong> </span>
+  </div>
+  <div class="card col-md-10">
+    <table class="table table-stiped">
+      <thead class="offset-md-4">
+        <tr>
+          <th class="align-middle ">Name</th>
+          <th>Course</th>
+          <th>Day</th>
+          <th>Hour</th>
+          <th>Statuts</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for displaydata in displaydata %}
+          <tr>
+            <td class="align-middle ml-4">{{ displaydata.0 }}</td>
+            <td class="align-middle">{{ displaydata.1 }}</td>
+            <td class="align-middle">{{ displaydata.2 }}</td>
+            <td class="align-middle">{{ displaydata.3 }}</td>
+            <td class="align-middle btn mt-4 {% if displaydata.4 == value%} btn-success p-2{%else%} btn-danger p-2 {%endif%}">{% if displaydata.4 == value%} Present <i class="fa fa-check-circle" aria-hidden="true"></i>
+              {%else%}Absent <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+
+              {%endif%}</td>
+            <td class="text-right">
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td class="bg-light text-center font-italic text-danger" colspan="4">No Attendance available for you now ! </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+
+    <div class="">
+      <ul class="pagination">
+       {% for i in paginator.page_range%}
+         <li class="page-item {% if i == page_number %} active {%endif%}">
+          <a href="?page={{i}}" class=" page-link col-md-offset-5">{{i}}</a>
+         </li>
+      {%endfor%}
+      </ul>
+  </div>
+
+  </div>
+
+  <marquee behavior="" direction=""><strong>Face recognition</strong></marquee>
+{% endblock %}

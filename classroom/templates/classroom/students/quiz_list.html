@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% include 'classroom/students/_header.html' with active='new' %}
+
+
+  <div class="card col-md-10">
+    <table class="table table-stiped">
+      <thead class="offset-md-4">
+        <tr>
+          <th class="align-middle ">Name</th>
+          <th>Course</th>
+          <th>Day</th>
+          <th>Hour</th>
+          <th>Statuts</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for displaydata in displaydata %}
+          <tr>
+            <td class="align-middle ml-4">{{ displaydata.0 }}</td>
+            <td class="align-middle">{{ displaydata.1 }}</td>
+            <td class="align-middle">{{ displaydata.2 }}</td>
+            <td class="align-middle">{{ displaydata.3 }}</td>
+            <td class="align-middle btn mt-4 {% if displaydata.4 == value%} btn-success p-1 {%else%} btn-danger p-1{%endif%}">{% if displaydata.4 == value%} Present <i class="fa fa-check-circle" aria-hidden="true"></i>
+              {%else%}Absent <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+
+              {%endif%}</td>
+            <td class="text-right">
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td class="bg-light text-center font-italic text-danger" colspan="4">No Attendance available for you now ! </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <marquee behavior="alternate" direction=""><strong>Face recognition</strong></marquee>
+{% endblock %}

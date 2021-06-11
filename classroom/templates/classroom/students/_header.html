@@ -1,0 +1,126 @@
+
+
+<div class="badge-light"><h2>Check your attendance now</h2></div>
+<p class="text-muted">
+  Subjects:{% for subject in user.student.interests.all %} {{ subject.get_html_badge }}{% endfor %}
+  <button type="button" id="btn" class="btn btn-primary mt-3" >Check <i class="fa fa-address-card" aria-hidden="true"></i></button>
+    <div class="date card container p-2 col-md-8 form-group offset-md-2">
+      <div class="offset-md-3">
+        <fieldset>
+          <form action="show" method="post"> {%csrf_token %}
+            <div class="row">
+              <div class="col-md-3 col-sm-5 col-xs-5">
+                <label for=""   class="ml-4">begin</label>
+                <input type="date" required class="form-control" name="date1" id="date1">
+              </div>
+              <div class="col-md-3 col-sm-5 col-xs-5">
+                <label for="">end</label>
+                <input type="date" required class="form-control" name="date2" id="date2">
+              </div>
+              <div class="col-md-1 onset-md-6 mt-4 ">
+                <button type="submit" onclick="show()" id="btn1" class="btn btn-primary mt-3" ><i class="fa fa-book" aria-hidden="true"></i> <i>timely</i>
+                </button>
+  
+              </div>
+            </div>
+          </form>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+  <script>
+    var value =document.getElementById('date1').value;
+    $(document).ready(function(){
+     $('.date').hide();
+     $('#button').hide();
+      $("#btn").click(function(){
+        $('.date').show();
+      })
+    })
+</script>
+
+
+<script>
+   function show(){
+    var text= document.getElementById("date1").value 
+    var text1= document.getElementById("date2").value
+    document.getElementById('val1').value=text
+    document.getElementById("val2").value=text1
+   }
+</script>
+  
+  <!-- Modal -->
+  <div class="col-md-8">
+    <div class="modal fade  " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title text-primary" style="float:left" id="exampleModalLongTitle"> <i><strong>Attendance : </strong></i>
+
+            </h5>
+            <i>
+            <input type="" class="mt-1" style="border:none;text-align:center;color:black;width:100px;font-style:italic" id="val1"><i class="fa fa-share-square text-primary" aria-hidden="true"></i>
+
+            <input type="" class="mt-1" style="border:none;text-align:center;color:black;width:100px;font-style:italic"  readonly id="val2">
+          </i>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body ">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">First</th>
+                  <th scope="col">Last</th>
+                  <th scope="col">Handle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td>@fat</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Larry</td>
+                  <td>the Bird</td>
+                  <td>@twitter</td>
+                </tr>
+              </tbody>
+            </table>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</p>
+
+<style>
+  .top{
+    margin-bottom :100px;
+  }
+</style>
+
+<ul class="nav nav-tabs top">
+  <li class="nav-item">
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active text-primary" href="">You can show timely your tatut <i class="fa fa-street-view" aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>

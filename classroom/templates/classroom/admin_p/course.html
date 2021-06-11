@@ -1,0 +1,428 @@
+{% extends "classroom/admin_p/admin.html"%}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <a class="info-box-icon bg-aqua btn" data-toggle="modal" data-target="#exampleModalCenter" ><i class="fa fa-plus-circle "></i></a>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Add new Course</span>
+          <span class="info-box-number">{{count1}}<small></small></span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        
+        <a class="info-box-icon bg-red btn" data-toggle="modal" data-target="#exampleModalCentering"><i class="fa fa-industry"></i></a>
+
+        <div class="info-box-content">
+          <span class="info-box-text">New fill</span>
+          <span class="info-box-number">{{count2}}</span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+
+    <!-- fix for small devices only -->
+    <div class="clearfix visible-sm-block"></div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Sales</span>
+          <span class="info-box-number">760</span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">New Members</span>
+          <span class="info-box-number">2,000</span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+  </div>
+
+<div class="row">
+    <div class="col-md-12">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <div class="row">
+            <div class="col-md-2" style="margin-top:8px"><h3 class="box-title">New Course <i class="fa fa-info-circle" aria-hidden="true"></i>
+            </h3></div>
+            <div class="col-md-5 " >
+              <div class="input-group" style="margin-left:-80px">
+                <input type="text" class="form-control" placeholder="Search course now" aria-describedby="basic-addon2">
+                <span class="input-group-addon" id="basic-addon2"> <i class="fa fa-search"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <div class="btn-group">
+              <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-wrench"></i></button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-11">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">Code_course</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Time allocated</th>
+                    <th scope="col">speciality</th>
+                    <th scope="col">action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for courses in course %}
+                  <tr>
+                    <th class="id" scope="row">{{courses.id}}</th>
+                    <td class="code" >{{courses.course_code}}</td>
+                    <td class="name">{{courses.name}}</td>
+                    <td class="time" >{{courses.time_allocated}} </td> 
+                    <td class="fill">{{courses.fill.name}}</td>
+                    <td>
+                      <button class="btn btn-primary fa fa-edit" id='edit' data-toggle="modal" data-target="#exampleModalCenters"></button>
+                      <a href="delete_course/{{courses.id}}"  onclick="return confirm('validate the action')" class="btn btn-danger fa fa-trash"></a>
+                    </td>
+                  </tr>
+                  {% endfor%}
+                </tbody>
+              </table>
+              <div class="col-md-offset-11">
+                <ul class="pagination">
+                 {% for i in paginator.page_range%}
+                   <li class="page-item {% if i == page_number %} active {%endif%}">
+                    <a href="?page={{i}}" class=" page-link col-md-offset-5">{{i}}</a>
+                   </li>
+                {%endfor%}
+                </ul>
+            </div>
+              <!-- /.chart-responsive -->
+            </div>
+            <!-- /.col -->
+            
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+      
+        <!-- /.box-footer -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+  </div>
+
+  <div class="box box-success">
+    <div class="box-header with-border">
+      <div class="row">
+        <div class="" id="msg">
+          <div class="" id="msg">
+            {% if messages.success%}
+            {% for msg in messages %}
+              <h5 class="alert alert-success text-center" role="alert">{{msg}} <i class="glyphicon glyphicon-alert"></i> </h5>
+              {% endfor %}
+            {%else%}
+            {% for msg in messages %}
+            <h5 class="alert alert-danger text-center" role="alert">{{msg}} <i class="glyphicon glyphicon-alert"></i> </h5>
+            {% endfor %}
+            {% endif%}
+        </div>
+      </div>
+
+        <div class="col-md-2" style="margin-top:8px"><h3 class="box-title">New Speciality <i class="fa fa-info-circle" aria-hidden="true"></i>
+        </h3></div>
+        <div class="col-md-5 " >
+          <div class="input-group" style="margin-left:-70px">
+            <input type="text" class="form-control" placeholder="Search course now" aria-describedby="basic-addon2">
+            <span class="input-group-addon" id="basic-addon2"> <i class="fa fa-search"></i></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding">
+      <div class="row">
+        <div class="col-md-9 col-sm-8">
+          <div class="pad">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">id</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">action1</th>
+                  <th scope="col">action2</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for fills in fill %}
+                <tr>
+                  <th class="fill_id" scope="row">{{fills.id_fill}}</th>
+                  <td class="fill_name" >{{fills.name}}</td>
+                  <td>
+                    <button class="btn btn-primary fa fa-edit" id='edith' data-toggle="modal" data-target="#exampleModalCenteringe"></button>
+                  </td>
+                  <td>
+                    <a href="delete_fill/{{fills.id_fill}}"  onclick="return confirm('validate the action')" class="btn btn-danger fa fa-trash"></a>
+                  </td>
+
+                </tr>
+                {% endfor%}
+              </tbody>
+            </table>
+            <div class="col-md-offset-10">
+              <ul class="pagination">
+               {% for i in paginator1.page_range%}
+                 <li class="page-item {% if i == page_number1 %} active {%endif%}">
+                  <a href="?page={{i}}" class=" page-link col-md-offset-5">{{i}}</a>
+                 </li>
+              {%endfor%}
+              </ul>
+          </div>
+            <div id="world-map-markers" style="height: 325px;"></div>
+          </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-4">
+          <div class="pad box-pane-right bg-green" style="min-height: 280px">
+            <div class="description-block margin-bottom">
+              <div class="sparkbar pad" data-color="#fff">90,70,90,70,75,80,70</div>
+              <h5 class="description-header">8390</h5>
+              <span class="description-text">Visits</span>
+            </div>
+            <!-- /.description-block -->
+            <div class="description-block margin-bottom">
+              <div class="sparkbar pad" data-color="#fff">90,50,90,70,61,83,63</div>
+              <h5 class="description-header">30%</h5>
+              <span class="description-text">Referrals</span>
+            </div>
+            <!-- /.description-block -->
+            <div class="description-block">
+              <div class="sparkbar pad" data-color="#fff">90,50,90,70,61,83,63</div>
+              <h5 class="description-header">70%</h5>
+              <span class="description-text">Organic</span>
+            </div>
+            <!-- /.description-block -->
+          </div>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.box-body -->
+  </div>
+
+
+  <!--modal1-->      
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" style="margin-bottom:-25px" id="exampleModalLongTitle"> <strong>New course</strong></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+           <form action="add_course" method="post">
+             {% csrf_token %}
+            <div class="form-group">
+                 <label for="">Course code</label>
+                 <input type="text" placeholder="Enter the course code" required class="form-control" name="code"><br>
+                 <label for="">Course name</label>
+                 <input type="text" placeholder="Enter the course name" required class="form-control" name="name"><br>
+                 <label for="">Time allocated</label>
+                 <input type="number" placeholder="Enter the course time" required class="form-control" name="time"><br>
+                 <label for="">Speciality</label>
+                 
+                 <select name="fill" id="fill" type="text" required class="form-control">
+                  {% for fill in fill_name%}
+                  <option   value="{{fill.id_fill}}">{{fill.name}}</option>
+                  {% endfor %}
+                </select><br>
+                <label for="">Interested Lecturer</label>
+                <select name="lecturer_id" id="lecturer" type="text" required class="form-control">
+                  {% for lecturer in lect_info%}
+                  <option   value="{{lecturer.id}}">{{lecturer.username}}</option>
+                  {% endfor %}
+                </select>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+
+
+  
+      
+      <!-- Modal2 -->
+      <div class="modal fade" id="exampleModalCenters" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Edit Course</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="update_course" method="post">
+                {% csrf_token %}
+               <div class="form-group"  >
+                    <input type="hidden" id='id'  name='id'>
+                    <label for="">Course code</label>
+                    <input type="text" placeholder="Enter the course code" required class="form-control" id="code" name="code"><br>
+                    <label for="">Course name</label>
+                    <input type="text" placeholder="Enter the course name" required class="form-control" id='name' name="name"><br>
+                    <label for="">Time allocated</label>
+                    <input type="number" placeholder="Enter the course time" required class="form-control" id='time' name="time"><br>
+                    <label for="">Speciality</label>
+                    
+                    <select name="fill" type="text" required class="form-control" id='fill'>
+                     {% for course1 in course%}
+                     <option  value="{{course1.fill_id}}">{{course1.name}}</option>
+                     {% endfor %}
+                   </select>
+                   </div>
+                   <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                     <button type="submit" class="btn btn-primary">Save changes</button>
+                   </div>
+               </form>
+            </div>
+          </div>
+        </div>
+      </div>   
+
+    <!---Modal3-->
+      <div class="modal fade" id="exampleModalCentering" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">New fill</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="add_fill" method="post">
+                {% csrf_token %}
+               <div class="form-group"  >
+                    <label for="">Fill Name</label>
+                    <input type="text" placeholder="Enter the name fill" required class="form-control" id="fill_names" name="fill_names"><br>  
+                  </div>
+                   <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                     <button type="submit" class="btn btn-primary">Save changes</button>
+                   </div>
+               </form>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>  
+
+<!----modal4-->
+      <div class="modal fade" id="exampleModalCenteringe" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Edit fill</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="update_fills" method="post">
+                {% csrf_token %}
+               <div class="form-group"  >
+                    <label for="">Fill Name</label>
+                    <input type="text" placeholder="Enter the course code" required class="form-control" id="fill_name" name="fill_name"><br>  
+                     <input type="text" required name="fill_id" id='fill_id'> 
+                  </div>
+                   <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                     <button type="submit" class="btn btn-primary">Save changes</button>
+                   </div>
+               </form>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>   
+
+
+
+      <script>
+         $(document).on('click','#edit',function(){
+           var _this = $(this).parents('tr');
+           $('#id').val(_this.find('.id').text());
+           $('#code').val(_this.find('.code').text());
+           $('#name').val(_this.find('.name').text());
+           $('#time').val(parseInt(_this.find('.time').text()));
+           $('#fill').val(_this.find('.fill').text());
+         });     
+         
+         
+         $(document).on('click','#edith',function(){
+          var _this = $(this).parents('tr');
+          $('#fill_id').val(_this.find('.fill_id').text());
+          $('#fill_name').val(_this.find('.fill_name').text());
+        });   
+     </script>
+        
+
+{%endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+  {% if form.non_field_errors %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {% for error in form.non_field_errors %}
+        {% if forloop.last %} {% endif %}{{ error }}</>
+      {% endfor %}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  {% endif %}
+  <div class="card col-md-4">
+    <form method="post" novalidate>
+      {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+       <h2 class="title"> Log in</h2>
+ 
+       <p class="or"><span>or</span></p>
+ 
+       <div class="email-login">
+          {{ form.username|as_crispy_field }}
+          {{ form.password|as_crispy_field }}
+       </div>
+       <button class="cta-btn btn-primary">Log In</button>
+       <hr>
+    </form>
+ </div>
+ 
+{% endblock %}

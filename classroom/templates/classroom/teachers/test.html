@@ -1,0 +1,281 @@
+{% extends 'layout.html' %}
+
+{% load static %}
+{% block title %}Image Recognition | AI Course-work{% endblock %}
+{% block content %}
+<link href="{% static 'bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+
+
+<style>
+
+  .container{
+    padding: 50px;
+    height:5px;
+    padding-bottom: ;
+  }
+  @media print {
+      body * {
+        visibility: hidden;
+      }
+      .list{
+        display: inline;
+      }
+      .print-container ,.print-container *  {
+        visibility: visible;
+      }
+
+      .print-container{
+        top:50px;
+        position:absolute;
+        margin-left: 40px;
+      }
+    
+    }
+  
+  .list{
+    display:none;
+  }
+
+  .img{
+    background-repeat:no-repeat;
+-webkit-background-size:cover;
+-moz-background-size:cover;
+-o-background-size:cover;
+background-size:cover;
+background-position:center;
+  }
+
+</style>
+<div class="img" style="color:rgb(224, 216, 216);height: 53em;background-image: url('{% static 'img/image.jpg' %}');background-repeat:no-repeat;">
+<div class="container button_space" >
+  <div class="col-lg-12" style="background: rgba(0,0,0,0.6);margin-top:3em;margin-bottom:5em;padding-top:1em;padding-bottom:3em;color:#fff;border-radius:10px;-webkit-box-shadow: 2px 2px 15px 0px rgba(0, 3, 0, 0.7);
+-moz-box-shadow:    2px 2px 15px 0px rgba(0, 3, 0, 0.7);
+box-shadow:         2px 2px 15px 0px rgba(0, 3, 0, 0.7);">
+    <div class="col-lg-12">
+      <div class="col-md-3 onset-md-6">
+        {%if messages%}     
+        {%for message in messages%}
+        <div class="alert alert-success text-center">{{message}}  <i class="fa fa-book fa-2x" aria-hidden="true"></i>
+        </div>              
+        {%endfor%}
+      {%endif%}
+  
+      </div>
+<br><p></p>
+      <a href="/admin"><h5 class="text-right"> 
+        {% if user.is_authenticated %}
+        <p class="pt-3 "> <span class="mb-4">Welcome Mister</span> <strong>{{ user.username }}</strong>. <a class="btn btn-danger" href="{% url 'logout' %}">Log out <i class="fa fa-power-off" aria-hidden="true"></i> </a>.</p>
+      {% endif %}
+      </h5>
+    </a>
+      <h1 class="text-center section-title" style="margin-bottom:2em"> Student Attendance with Face Recognition.</h1>
+    </div>
+
+
+    <style>
+      h4{
+        margin-bottom: 1.5em;
+      }
+      img{
+        border-radius:50%;
+        -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+     transition: all 0.3s ease-in-out;
+      }
+      img:hover{
+        -webkit-box-shadow: 2px 2px 21px 0px rgba(0, 3, 0, 0.91);
+        -moz-box-shadow:    2px 2px 21px 0px rgba(0, 3, 0, 0.91);
+        box-shadow:         2px 2px 21px 0px rgba(0, 3, 0, 0.91);
+        border:2px solid #fff;
+      }
+      h3{
+        margin-bottom: 1.3em;
+      }
+      a{
+        color:inherit
+      }
+      a:hover{
+        color:inherit;
+        text-decoration: none;
+      }
+      .section-title:after {
+        	content:' ';display:block;margin:0 auto;width:100px;margin-top: 6px;border:2px solid #d0d0d0;border-radius:4px;
+        	-webkit-border-radius:4px;
+        	-moz-border-radius:4px;
+        	box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+        	-webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+        	-moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .05);
+          margin-bottom:1em;
+        }
+    </style>
+
+    <div class="row">
+     
+      <div class="col-md-5" style="border-right: 2px solid;">
+        <h3 class="text-center">Using Eigenfaces with SVM</h3>
+        <div class="col-md-4">
+            <form action="save_attend" method="POST">
+              {% csrf_token %}
+                <div class="list">
+                  {% for users in users%}
+                  <input type="checkbox" required checked name="user_id" >
+                  <input type="text" required  name='remark' value="{{users.id}}">
+                  {% endfor%}
+                  <input type="text" name="course_id" value="{{course}}">
+                  <input type="text" name="fill_id"  value={{fill}}>
+                </div>
+                <button  onclick="return alert('attendance list created with success')" class="btn-disabled"  for="file-input" style="cursor:pointer;background:transparent;border:none">
+                  <img src="{% static 'img/photo.png' %}" class="img-responsive" />
+                </button>
+
+            </form>
+          <h4 class="text-center"> Attendance list</h4>
+        </div>
+
+        <div class="col-md-4">
+          <button type="button" style="background:transparent;border:none" data-toggle="modal" data-target="#staticBackdrop">
+            <img src="{% static 'img/add.png' %}" class="img-responsive" />
+          </button>
+          <h4 class="text-center">View attendance list</h4>
+        </div>
+
+       <!--- <div class="">
+          <form action="/detect" method="post">{% csrf_token%}
+            <div class="col-md-4">
+              <input type="hidden" class="text-primary" name="user_id" value="{{userid}}">
+              <input type="hidden" class="text-primary" name="course_id" value="{{course}}">
+              <input type="hidden" name="fill_id" class="text-primary" value="{{fill}}">
+              <button><img src="{% static 'img/webcam.png' %}" style="background:transparent;border:none"  class="img-responsive" /></button>
+              <h4 class="text-center"> Start marking</h4>
+            </div>
+           </form>
+        </div>
+!-->
+      </div>
+      <div class="col-md-7">
+        <h3 class="text-center">With OpenCV, LBPH</h3>
+         <form action="/detect" method="post">{% csrf_token%}
+          <div class="col-md-3">
+            <input type="hidden" class="text-primary" name="user_id" value="{{userid}}">
+            <input type="hidden" class="text-primary" name="course_id" value="{{course}}">
+            <input type="hidden" name="fill_id" class="text-primary" value="{{fill}}">
+            <button><img src="{% static 'img/webcam.png' %}" style="background:transparent;border:none"  class="img-responsive" /></button>
+            <h4 class="text-center"> Start marking</h4>
+          </div>
+         </form>
+        <div class="col-md-3">
+          <a href="/trainer"><img src="{% static 'img/trainer.png' %}" class="img-responsive" /></a>
+          <h4 class="text-center">Train The Classifier</h4>
+        </div>
+        <div class="col-md-3">
+          <button type="button" style="background:transparent;border:none" data-toggle="modal" data-target="#myModal">
+            <img src="{% static 'img/add.png' %}" class="img-responsive" />
+          </button>
+          <h4 class="text-center">Create Dataset</h4>
+        </div>
+      </div>
+    </div>
+</div><!-- Container -->
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Input unique id and wait for webcam</h4>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li>For higher accuracy, make sure to stay in room with good lightning.</li>
+          <li>Please remove any type of accesories from face.</li>
+          <li>Make sure your face in clearly visible in camera.</li>
+          <li>Make sure your hair is not blocking the face.</li>
+          <li>Make sure no other faces are within the cam frame.
+        </ul>
+        <hr/>
+        <form action="/create_dataset" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="inputId">Enter Unique ID*</label>
+            <input type="text" class="form-control" name="userId" id="inputId" placeholder="Enter Id">
+          </div>
+          <button type="submit" class="btn btn-warning">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--modal2!-->
+<div class="modal fade bd-example-modal-lg" id="staticBackdrop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <button type="button" class="close" style="color:#fff" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel" > Overview of attendance <img width="50" height="50" src="https://icons.iconarchive.com/icons/photoshopedia/xedia/128/My-Documents-icon.png" alt=""></h4>
+      </div>
+      <div class="modal-body text-dark" style="color:black">
+           <div class="form-group col-md-8 col-md-offset-4 ">
+            <form action="">
+              <label for="" class="col-md-offset-10">Choose  date</label>
+              <div class="row">
+                <div class="col-md-6"> <input type="date" name="IDate" class="form-control"><br></div>
+                <div class="col-md-6"><input type="date" name="IDate" class="form-control"> </div>
+              </div>
+            </form>
+
+            <div class="pdf_image col-md-offset-10 col-sm-onset-10 col-xs-offset-10 mt-2">
+              <button class="btn btn-light" onclick="window.print();"  ><img src="https://icons.iconarchive.com/icons/treetog/file-type/64/pdf-icon.png" alt=""></button>
+              <h5 class="text-danger text-center">Export list to pdf</h5>
+            </div>
+           </div>
+
+           <div class="print-container">      
+           <h5 style="font-family:fansong;font-size:25px;font-style:italic" class="text-info text-capitalize"> <strong>Attendance list Report of {{fill_name}} {{current_date}} <i class="fa fa-book fa-1x" aria-hidden="true"></i> </strong></h5>
+           <hr>
+
+      <div class="list " style="display: none">Attendance list Report {{current_date}} <i class="fa fa-book fa-2x" aria-hidden="true"></i></div>
+      <table class="table table-striped table-">
+        <thead class="thead-dark bg-primary">
+          <tr>
+            <th scope="col">Student</th>
+            <th scope="col">Course</th>
+            <th scope="col">Date</th>
+            <th scope="col">Hour</th>
+            <th scope="col">Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for attend_value in attend_value%}
+          <tr>
+            <th scope="row">{{attend_value.student.username}}</th>
+            <td>{{attend_value.course.name}}</td>
+            <td>{{attend_value.date}}</td>
+            <td>{{attend_value.hour}}</td>
+            <td class="{% if attend_value.statut == value%} text-success{%else%} text-danger{%endif%}">
+              {% if attend_value.statut == value%} Present <i class="fa fa-check-circle" aria-hidden="true"></i>
+                  {%else%}Absent <i class="fa fa-exclamation-circle" aria-hidden="true"></i>{%endif%}
+            </td>
+          </tr>
+
+          {% empty %}
+ 
+                 <marquee behavior="alternate" direction="left" loop=""> <span class="text-center text-danger float-center col-md-offset-4 col-xs-offset-5 col-sm-ofset-5" style="font-style:oblique;">Yo must create an attendance list  before to show it here</span></marquee>
+            
+          {% endfor%}
+        </tbody>
+      </table>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+{% endblock %}
