@@ -2,10 +2,22 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from django.forms.utils import ValidationError
-
+from django.db import models
 from classroom.models import (Answer, Question, Student, StudentAnswer,
-                              Subject, User)
+                              Subject, User,fill)
+class MyModel(models.Model):
+    A = 1
+    B = 2
+    C = 4
+    MY_CHOICES = ((A, "foo"), (B, "bar"), (C, "baz"))
+    my_field = models.IntegerField(default=0)
 
+class UserForm(forms.Form):
+    firstName = forms.CharField(label="FirstName",help_text="First Name",widget=forms.TextInput(attrs={'class': 'form-control'}))
+    lastName = forms.CharField(label="LastName",help_text="Last Name",widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(label="Email",help_text="Email",widget=forms.EmailInput(attrs={'class':'form-control'}))
+    phoneNumber =forms.CharField(min_length=3,max_length=15,help_text="Phone Number",label="Phone Number",widget=forms.NumberInput(attrs={'class':'form-control'}))
+    password =forms.CharField(min_length=8,help_text="Password",label="Mot de passe ",widget =forms.PasswordInput(attrs={'class':'form-control'}))
 
 class TeacherSignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):

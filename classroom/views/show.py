@@ -9,7 +9,7 @@ from datetime import datetime
 from numpy.ma.core import ids
 from django.contrib  import messages
 from classroom.models import User,Attendances
-
+from ..forms import UserForm
 current_date = datetime.date(datetime.now())
 now =datetime.now()
 current_time = now.strftime("%H:%M:%S")
@@ -114,6 +114,28 @@ def course(request):
     
     return render(request,"classroom/admin_p/course.html",context)
 
+
+def user(request):
+    fill_name =fill.objects.all()
+    form =UserForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            firstName = form.cleaned_data["firstName"]
+            lastName=form.cleaned_data["lastName"]
+            email=form.cleaned_data["email"]
+            phoneNumber=form.cleaned_data["phoneNumber"]
+            password =form.cleaned_data["password"]
+            fill_id = request.POST["fill_id"]
+            users= User.objects.create(password=password,username=firstName,last_name=lastName,email=email,is_active=1,is_student=1,fill_id=fill_id,Phone_number=phoneNumber)
+            if(users is not None):
+                messages.success(request,"you record has been performed with success")
+                return redirect('/admin/user')
+        else:
+            return render(request,"classroom/admin_p/new_user.html",{'form':form,'fill_name':fill_name})   
+            messages.error(request,"Verify please each field")
+    context={'form':form,'users':user,'fill_name':fill_name}
+    return render(request,"classroom/admin_p/new_user.html",context)
+
 def add_course(request):  
     if request.method=="POST":
         code= request.POST['code']
@@ -133,8 +155,9 @@ def update_course(request):
         name=request.POST['name']
         time = request.POST['time']
         fill_id=request.POST['fill']
+        lecturer_id =request.POST['lecturer_id']
         fills = fill.objects.get(id_fill=fill_id)
-        Course.objects.filter(id=ids).update(course_code=code,name=name,time_allocated=time,fill=fills)
+        Course.objects.filter(id=ids).update(course_code=code,name=name,time_allocated=time,fill=fills,lecturer_id=lecturer_id)
         return redirect('/admin/course')
     
 def delete_course(request,id):

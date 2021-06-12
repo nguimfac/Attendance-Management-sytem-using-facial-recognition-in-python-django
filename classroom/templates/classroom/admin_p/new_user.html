@@ -1,0 +1,103 @@
+{% extends "classroom/admin_p/admin.html"%}
+{% block content %}
+<div class="row">
+    <div class="box box-info">
+        <div class="box-header with-border">
+
+          {% if messages.success%}
+          {% for msg in messages %}
+            <h5 class="alert alert-danger text-center" role="alert">{{msg}} <i class="fa fa-check-circle"></i> </h5>
+            {% endfor %}
+          {%else%}
+          {% for msg in messages %}
+          <h5 class="alert alert-success text-center" role="alert">{{msg}} <i class="glyphicon glyphicon-alert"></i> </h5>
+          {% endfor %}
+          {% endif%}
+
+          <h3 class="box-title">New Student</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+        <div class="row">
+          <div class="col-md-7">
+            <div class="form-group">
+              <form action="newStudent" method="post" novalidate> {% csrf_token%}
+                <label for="username">First Name</label>
+                {{form.firstName}}
+                {% if form.firstName.errors%}
+                {% for error in  form.firstName.errors%}
+                   <small class="text-danger">{{error}}</small>
+                {%endfor%}
+              {% endif%}<br><br>
+                <label for="username">Last Name</label>
+                 {{form.lastName}}
+                 {% if form.lastName.errors %}
+                 {% for error in form.lastName.errors%}
+                 <small class="text-danger">{{error}}</small>
+                 {% endfor%}
+                 {%endif%}
+                <br><br>
+                <label for="username">Email</label>
+                {{form.email}}
+                {% if form.email.errors %}
+                {% for error in form.email.errors%}
+                <small class="text-danger">{{error}}</small>
+                {% endfor%}
+                {%endif%}
+                <br><br>
+                <label for="username">Phone number</label>
+                {{form.phoneNumber}}
+                {% if form.phoneNumber.errors %}
+                {% for error in form.phoneNumber.errors%}
+                <small class="text-danger">{{error}}</small>
+                {% endfor%}
+                {%endif%}
+                <br><br>
+                <label for="password">Password</label>
+                {{form.password}}
+                {% if form.password.errors %}
+                {% for error in form.password.errors%}
+                <small class="text-danger">{{error}}</small>
+                {% endfor%}
+                {%endif%} 
+                <br><br>
+
+                <label for="">Speciality</label>
+                <select name="fill_id" id="fill" type="text" required class="form-control">
+                  {% for fill_name in fill_name%}
+                  <option   value="{{fill_name.id_fill}}">{{fill_name.name}}</option>
+                  {% endfor %}
+                </select> 
+                <div class="box-footer clearfix">
+                  <button type="reset"  class="btn btn-sm btn-danger btn-flat pull-left">Reset All</button>
+                  <button type="submit" class="btn btn-sm btn-primary btn-flat pull-right">Save  student </button>
+                </div>
+
+              </form>
+
+          </div>
+          </div>
+
+          <div class="col-md-4 b-1" style="margin-top: 190px;border-color:black">
+            <img src="https://icons.iconarchive.com/icons/ampeross/qetto-2/128/camera-icon.png"  class="col-md-offset-4 mr-3 col-xs-offset-4" alt=""><br><br>
+            <a  type="submit"href=""  class="btn btn-block mb-4 btn-sm btn-info btn-flat pull-right">Start  camera </a>
+          </div>
+        </div>
+          
+
+          
+
+
+          <!-- /.table-responsive -->
+        </div>
+        <!-- /.box-body -->
+
+        <!-- /.box-footer -->
+      </div>
+</div>
+{%endblock %}

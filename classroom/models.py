@@ -19,7 +19,7 @@ class User(AbstractUser):
     is_student = models.BooleanField(default=False)
     is_teacher = models.BooleanField(default=False)
     fill=models.ForeignKey(fill, on_delete=models.CASCADE,default=1)
-
+    Phone_number = models.IntegerField(default=659994937)
 class faceInfo(models.Model):  
     faceid=models.AutoField(primary_key=True)
     user =models.ForeignKey(User, on_delete=models.CASCADE,unique=True)

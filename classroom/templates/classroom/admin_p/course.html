@@ -225,28 +225,7 @@
           </div>
         </div>
         <!-- /.col -->
-        <div class="col-md-3 col-sm-4">
-          <div class="pad box-pane-right bg-green" style="min-height: 280px">
-            <div class="description-block margin-bottom">
-              <div class="sparkbar pad" data-color="#fff">90,70,90,70,75,80,70</div>
-              <h5 class="description-header">8390</h5>
-              <span class="description-text">Visits</span>
-            </div>
-            <!-- /.description-block -->
-            <div class="description-block margin-bottom">
-              <div class="sparkbar pad" data-color="#fff">90,50,90,70,61,83,63</div>
-              <h5 class="description-header">30%</h5>
-              <span class="description-text">Referrals</span>
-            </div>
-            <!-- /.description-block -->
-            <div class="description-block">
-              <div class="sparkbar pad" data-color="#fff">90,50,90,70,61,83,63</div>
-              <h5 class="description-header">70%</h5>
-              <span class="description-text">Organic</span>
-            </div>
-            <!-- /.description-block -->
-          </div>
-        </div>
+        
         <!-- /.col -->
       </div>
       <!-- /.row -->
@@ -328,14 +307,23 @@
                     <label for="">Speciality</label>
                     
                     <select name="fill" type="text" required class="form-control" id='fill'>
-                     {% for course1 in course%}
-                     <option  value="{{course1.fill_id}}">{{course1.name}}</option>
+                     {% for fill in fill_name%}
+                     <option  value="{{fill.id_fill}}">{{fill.name}}</option>
                      {% endfor %}
                    </select>
+
+                   <br>
+                   <label for="">Interested Lecturer</label>
+                   <select name="lecturer_id" id="lecturer" type="text" required class="form-control">
+                     {% for lecturer in lect_info%}
+                     <option   value="{{lecturer.id}}">{{lecturer.username}}</option>
+                     {% endfor %}
+                   </select>
+
                    </div>
                    <div class="modal-footer">
                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                     <button type="submit" class="btn btn-primary">Save changes</button>
+                     <button type="submit" class="btn btn-primary">Update changes</button>
                    </div>
                </form>
             </div>

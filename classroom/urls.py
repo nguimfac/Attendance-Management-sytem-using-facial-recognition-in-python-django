@@ -1,12 +1,13 @@
 from django.urls import include, path
 from django.contrib import admin
 from .views import classroom, students, teachers,show
-
 urlpatterns = [
       path('', classroom.home, name='home'),
       path('admin/', include(([
       path('', show.admin_show, name='admin'),
       path('course', show.course, name='course'),
+      path('newStudent',show.user, name='user'),
+      path('user',show.user, name='user'),
       path('add_course',show.add_course, name='add_course'),
       path('update_course',show.update_course, name='update_course'),
       path('delete_course/<int:id>',show.delete_course,name='delete_course'),
