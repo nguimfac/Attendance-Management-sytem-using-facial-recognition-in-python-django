@@ -14,7 +14,8 @@
           <h5 class="alert alert-success text-center" role="alert">{{msg}} <i class="glyphicon glyphicon-alert"></i> </h5>
           {% endfor %}
           {% endif%}
-<div><h4>New Student</h4></div>
+<div><h4>New Student</h4>
+</div>
           {%if not messages.success%}
           {% for msg in messages%}
         <div class="col-md-7  box-footer clearfix">
@@ -34,6 +35,7 @@
          
         <!-- /.box-header -->
         <div class="box-body">
+          <a data-toggle="modal" data-target="#myModal" type="submit" class="rounded btn btn-info btn-sm  btn-flat pull-right"> <strong>TRAIN IMAGE DATA</strong> </a> 
         <div class="row">
           <div class="col-md-7">
             <div class="form-group">
