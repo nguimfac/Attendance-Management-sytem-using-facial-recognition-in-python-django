@@ -5,11 +5,14 @@ import datetime
 from ..models import Course,fill
 from django.core.paginator import Paginator
 from time import time 
+
+from django.db.models import Max
 from datetime import datetime
 from numpy.ma.core import ids
 from django.contrib  import messages
 from classroom.models import User,Attendances
 from ..forms import UserForm
+from django.contrib.auth.hashers import make_password
 current_date = datetime.date(datetime.now())
 now =datetime.now()
 current_time = now.strftime("%H:%M:%S")
@@ -117,6 +120,8 @@ def course(request):
 
 def user(request):
     fill_name =fill.objects.all()
+    max_id=User.objects.last()
+    latest_val = max_id.id
     form =UserForm(request.POST)
     if request.method == 'POST':
         if form.is_valid():
@@ -124,16 +129,17 @@ def user(request):
             lastName=form.cleaned_data["lastName"]
             email=form.cleaned_data["email"]
             phoneNumber=form.cleaned_data["phoneNumber"]
-            password =form.cleaned_data["password"]
+            password =make_password(form.cleaned_data["password"])
             fill_id = request.POST["fill_id"]
-            users= User.objects.create(password=password,username=firstName,last_name=lastName,email=email,is_active=1,is_student=1,fill_id=fill_id,Phone_number=phoneNumber)
-            if(users is not None):
-                messages.success(request,"you record has been performed with success")
-                return redirect('/admin/user')
+            if(not User.objects.filter(email=email).exists()):
+                users= User.objects.create(password=password,username=firstName,last_name=lastName,email=email,is_active=1,is_student=1,fill_id=fill_id,Phone_number=phoneNumber)
+                if(users is not None ):
+                    messages.success(request,"you record has been performed with success")
+                    return redirect('/admin/user')
         else:
             return render(request,"classroom/admin_p/new_user.html",{'form':form,'fill_name':fill_name})   
             messages.error(request,"Verify please each field")
-    context={'form':form,'users':user,'fill_name':fill_name}
+    context={'form':form,'users':user,'fill_name':fill_name,'max':latest_val}
     return render(request,"classroom/admin_p/new_user.html",context)
 
 def add_course(request):  
