@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
-            <a class="info-box-icon bg-aqua btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus-circle "></i></a>
+            <a class="info-box-icon bg-aqua btn"><i class="fa fa-plus-circle "></i></a>
 
             <div class="info-box-content">
                 <span class="info-box-text">Add new Course</span>
@@ -17,7 +17,7 @@
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="info-box">
 
-            <a class="info-box-icon bg-red btn" data-toggle="modal" data-target="#exampleModalCentering"><i class="fa fa-industry"></i></a>
+            <a class="info-box-icon bg-red btn"><i class="fa fa-industry"></i></a>
 
             <div class="info-box-content">
                 <span class="info-box-text">New fill</span>
@@ -66,10 +66,15 @@
             <div class="box-header with-border">
                 <div class="row">
                     <div class="col-md-2" style="margin-top:8px">
-                        <h3 class="box-title">New Course <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        <h3 class="box-title">List of Student <i class="fa fa-info-circle" aria-hidden="true"></i>
                         </h3>
                     </div>
-
+                    <div class="col-md-5 ">
+                        <div class="input-group" style="margin-left:-80px">
+                            <input type="text" class="form-control" placeholder="Search course now" aria-describedby="basic-addon2">
+                            <span class="input-group-addon" id="basic-addon2"> <i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="box-tools pull-right">
@@ -93,28 +98,30 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-11">
-                        <table class="table table-bordered table-striped" id="myTable_course">
+                        <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col">id</th>
-                                    <th scope="col">Code_course</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Time allocated</th>
-                                    <th scope="col">speciality</th>
-                                    <th scope="col">action</th>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">FIRST NAME</th>
+                                    <th scope="col">lAST NAME</th>
+                                    <th scope="col">EMAIL</th>
+                                    <th scope="col">FILL</th>
+                                    <th scope="col">PHONE NUMBER</th>
+                                    <th scope="col">ACTION</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for courses in course %}
+                                {% for listStudents in listStudent %}
                                 <tr>
-                                    <th class="id" scope="row">{{courses.id}}</th>
-                                    <td class="code">{{courses.course_code}}</td>
-                                    <td class="name">{{courses.name}}</td>
-                                    <td class="time">{{courses.time_allocated}} </td>
-                                    <td class="fill">{{courses.fill.name}}</td>
+                                    <th class="id" scope="row">{{listStudents.id}}</th>
+                                    <td class="firstName">{{listStudents.username}}</td>
+                                    <td class="lastName">{{listStudents.last_name}}</td>
+                                    <td class="email">{{listStudents.email}} </td>
+                                    <td class="fill">{{listStudents.fill.name}}</td>
+                                    <td class="phone">{{listStudents.Phone_number}}</td>
                                     <td>
                                         <button class="btn btn-primary fa fa-edit" id='edit' data-toggle="modal" data-target="#exampleModalCenters"></button>
-                                        <a href="delete_course/{{courses.id}}" onclick="return confirm('validate the action')" class="btn btn-danger fa fa-trash"></a>
+                                        <a href="deleteStudent/{{listStudents.id}}" onclick="return confirm('validate the action')" class="btn btn-danger fa fa-trash"></a>
                                     </td>
                                 </tr>
                                 {% endfor%}
@@ -162,7 +169,12 @@
                 <h3 class="box-title">New Speciality <i class="fa fa-info-circle" aria-hidden="true"></i>
                 </h3>
             </div>
-
+            <div class="col-md-5 ">
+                <div class="input-group" style="margin-left:-70px">
+                    <input type="text" class="form-control" placeholder="Search course now" aria-describedby="basic-addon2">
+                    <span class="input-group-addon" id="basic-addon2"> <i class="fa fa-search"></i></span>
+                </div>
+            </div>
         </div>
 
         <div class="box-tools pull-right">
@@ -171,25 +183,16 @@
             <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
         </div>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable();
-            $('#myTable_course').DataTable();
-        });
-    </script>
-
     <!-- /.box-header -->
     <div class="box-body no-padding">
         <div class="row">
-            <div class="col-md-11 col-sm-8">
+            <div class="col-md-9 col-sm-8">
                 <div class="pad">
-                    <table class="table  table-bordered table-striped" id="myTable">
+                    <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th scope="col">id</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Description</th>
                                 <th scope="col">action1</th>
                                 <th scope="col">action2</th>
                             </tr>
@@ -199,7 +202,6 @@
                             <tr>
                                 <th class="fill_id" scope="row">{{fills.id_fill}}</th>
                                 <td class="fill_name">{{fills.name}}</td>
-                                <td class="fill_desc">{{fills.description|truncatewords:15}}</td>
                                 <td>
                                     <button class="btn btn-primary fa fa-edit" id='edith' data-toggle="modal" data-target="#exampleModalCenteringe"></button>
                                 </td>
@@ -287,37 +289,33 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Edit Course</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Student</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-                <form action="update_course" method="post">
+                <form action="updateStudent" method="post">
                     {% csrf_token %}
                     <div class="form-group">
                         <input type="hidden" id='id' name='id'>
-                        <label for="">Course code</label>
-                        <input type="text" placeholder="Enter the course code" required class="form-control" id="code" name="code"><br>
-                        <label for="">Course name</label>
-                        <input type="text" placeholder="Enter the course name" required class="form-control" id='name' name="name"><br>
-                        <label for="">Time allocated</label>
-                        <input type="number" placeholder="Enter the course time" required class="form-control" id='time' name="time"><br>
+                        <label for="">First Name</label>
+                        <input type="text" placeholder="Enter your first name" required class="form-control" id="firstName" name="firstName"><br>
+                        <label for="">Last Name</label>
+                        <input type="text" placeholder="Enter your Last Name" required class="form-control" id='lastName' name="lastName"><br>
+                        <label for="">Email</label>
+                        <input type="text" placeholder="Enter your email" required class="form-control" id='email' name="email"><br>
                         <label for="">Speciality</label>
 
                         <select name="fill" type="text" required class="form-control" id='fill'>
                      {% for fill in fill_name%}
-                     <option  value="{{fill.id_fill}}">{{fill.name}}</option>
+                     <option id='fill' value="{{fill.id_fill}}">{{fill.name}}</option>
                      {% endfor %}
                    </select>
-
                         <br>
                         <label for="">Interested Lecturer</label>
-                        <select name="lecturer_id" id="lecturer" type="text" required class="form-control">
-                     {% for lecturer in lect_info%}
-                     <option   value="{{lecturer.id}}">{{lecturer.username}}</option>
-                     {% endfor %}
-                   </select>
+                        <input type="text" placeholder="Enter your email" required class="form-control" id='phone' name="phoneNumber"><br>
+
 
                     </div>
                     <div class="modal-footer">
@@ -329,6 +327,7 @@
         </div>
     </div>
 </div>
+
 
 <!---Modal3-->
 <div class="modal fade" id="exampleModalCentering" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -346,8 +345,6 @@
                     <div class="form-group">
                         <label for="">Fill Name</label>
                         <input type="text" placeholder="Enter the name fill" required class="form-control" id="fill_names" name="fill_names"><br>
-                        <label for="desciption">Description</label>
-                        <textarea name="desc" required minlength="5" id="desc" class="form-control" cols="20" rows="7"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -378,9 +375,7 @@
                     <div class="form-group">
                         <label for="">Fill Name</label>
                         <input type="text" placeholder="Enter the course code" required class="form-control" id="fill_name" name="fill_name"><br>
-                        <input type="hidden" required name="fill_id" id='fill_id'><br>
-                        <label for="desciption">Description</label>
-                        <textarea name="desc" required minlength="5" id="descr" class="form-control" cols="20" rows="7"></textarea>
+                        <input type="text" required name="fill_id" id='fill_id'>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -401,10 +396,11 @@
     $(document).on('click', '#edit', function() {
         var _this = $(this).parents('tr');
         $('#id').val(_this.find('.id').text());
-        $('#code').val(_this.find('.code').text());
-        $('#name').val(_this.find('.name').text());
-        $('#time').val(parseInt(_this.find('.time').text()));
+        $('#firstName').val(_this.find('.firstName').text());
+        $('#lastName').val(_this.find('.lastName').text());
+        $('#email').val((_this.find('.email').text()));
         $('#fill').val(_this.find('.fill').text());
+        $('#phone').val(_this.find('.phone').text());
     });
 
 
@@ -412,7 +408,6 @@
         var _this = $(this).parents('tr');
         $('#fill_id').val(_this.find('.fill_id').text());
         $('#fill_name').val(_this.find('.fill_name').text());
-        $('#descr').val(_this.find('.fill_desc').text());
     });
 </script>
 

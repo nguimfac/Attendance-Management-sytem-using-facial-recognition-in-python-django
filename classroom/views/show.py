@@ -37,7 +37,7 @@ def list_attend(request):
     cursor =connection.cursor()
     cursor.execute("SELECT username,name,A.date,hour,statut FROM classroom_user U,classroom_attendances A, classroom_course C WHERE A.student_id=U.id and A.course_id=C.id and U.id="+str(request.user.id)+" and A.date>='"+str(date1)+"' and A.date<='"+str(date2)+"' order by A.date desc")
     result = cursor.fetchall()
-    paginator = Paginator(result,per_page=3)
+    paginator = Paginator(result,per_page=10)
     page_number = request.GET.get('page',1)
     page_obj = paginator.get_page(page_number)
     context = {"displaydata":page_obj.object_list,"value":1,"id":current_date,'date':date1,'date2':date2 ,'paginator':paginator,'page_number':int(page_number)}
@@ -95,29 +95,50 @@ def show_attendance(request):
         return render(request, 'classroom/home.html')
 
 def course(request):
-    '''
-    cursor= connection.cursor()
-    cursor.execute("SELECT  name FROM classroom_course")
-    result = cursor.fetchall()'''
-    
+   
     count1= Course.objects.all().count()
-    value2= Course.objects.all().order_by('-date')
-    paginator =Paginator(value2,per_page=3)
-    page_number = request.GET.get('page',1)
-    page_obj = paginator.get_page(page_number)
+    course_value= Course.objects.all().order_by('-date')
+    
+    #paginator =Paginator(value2,per_page=10)
+    #page_number = request.GET.get('page',1)
+    #page_obj = paginator.get_page(page_number)
     
     lect_info=User.objects.filter(is_teacher=1)
-    
-    value3 = fill.objects.all().order_by('-date')
+    fill_value = fill.objects.all().order_by('-date')
     count2 = fill.objects.all().count()
-    paginator1=Paginator(value3,per_page=3)
-    page_number1 = request.GET.get('page',1)
-    page_obj1=paginator1.get_page(page_number1)
-    context ={'lect_info':lect_info,'fill':page_obj1.object_list,'paginator1':paginator1,'page_number1':int(page_number1),'fill_name':value3,'course':page_obj.object_list,'paginator':paginator,'page_number':int(page_number),'count1':count1,'count2':count2}
-    
+    #paginator1=Paginator(value3,per_page=10)
+    #page_number1 = request.GET.get('page',1)
+    #page_obj1=paginator1.get_page(page_number1)
+    context ={'lect_info':lect_info,'fill':fill_value,'fill_name':fill_value,'course':course_value,'count1':count1,'count2':count2}
     return render(request,"classroom/admin_p/course.html",context)
 
 
+def listUser(request):  
+    fill_name=fill.objects.all()
+    count_User=User.objects.filter(is_student=True).count()
+    listStudent= User.objects.filter(is_student=True).order_by('-date_joined')
+    paginator=Paginator(listStudent,per_page=10)
+    page_number=request.GET.get('page',1)
+    page_obj=paginator.get_page(page_number)
+    
+    
+    context={'listStudent':page_obj.object_list,'fill_name':fill_name,'count_User':count_User,'paginator':paginator,'page_number':int(page_number)}    
+    return render(request,"classroom/admin_p/list_user.html",context)
+
+def updateStudent(request): 
+    if request.method == 'POST':
+        ids=request.POST['id']
+        firstName= request.POST['firstName']
+        lastName= request.POST['lastName']
+        email= request.POST['email']
+        fill_id=request.POST['fill']
+        phoneNumber=request.POST['phoneNumber']
+        User.objects.filter(id=ids).update(username=firstName,last_name=lastName,email=email,fill_id=fill_id,Phone_number=phoneNumber)
+        return redirect('/admin/listUser')
+
+def deleteStudent(request,id): 
+    User.objects.filter(id=id).delete()
+    return redirect('/admin/listUser')
 def user(request):
     fill_name =fill.objects.all()
     max_id=User.objects.last()
@@ -174,7 +195,8 @@ def update_fill(request):
     if request.method =='POST':  
         fill_id=request.POST['fill_id']
         fill_name=request.POST['fill_name']
-        fill.objects.filter(id_fill=fill_id).update(name=fill_name)
+        fill_desc=request.POST['desc']
+        fill.objects.filter(id_fill=fill_id).update(name=fill_name,description=fill_desc)
         return redirect('/admin/course')
 
 def delete_fill(request,id): 
@@ -184,8 +206,9 @@ def delete_fill(request,id):
 def add_fill(request):  
     if request.method =='POST': 
         fills= request.POST['fill_names']
+        fill_desc=request.POST['desc']
         if not fill.objects.filter(name=fills).exists():
-            fill.objects.create(name=fills)
+            fill.objects.create(name=fills,description=fill_desc)
             messages.success(request,'Added with success')   
 
         else:

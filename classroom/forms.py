@@ -5,12 +5,9 @@ from django.forms.utils import ValidationError
 from django.db import models
 from classroom.models import (Answer, Question, Student, StudentAnswer,
                               Subject, User,fill)
-class MyModel(models.Model):
-    A = 1
-    B = 2
-    C = 4
-    MY_CHOICES = ((A, "foo"), (B, "bar"), (C, "baz"))
-    my_field = models.IntegerField(default=0)
+class OrderFilter(forms.Form):
+    search = forms.CharField(label="Search",help_text="Search there",widget=forms.TextInput(attrs={'class': 'form-control'}))
+   
 
 class UserForm(forms.Form):
     firstName = forms.CharField(label="FirstName",help_text="First Name",widget=forms.TextInput(attrs={'class': 'form-control'}))

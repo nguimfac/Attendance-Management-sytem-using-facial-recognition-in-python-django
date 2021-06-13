@@ -12,6 +12,7 @@ class displaydata(models.Model):
 class fill(models.Model):
     id_fill= models.IntegerField(primary_key=True)
     name= models.CharField(max_length=155)
+    description =models.CharField(max_length=500,default="Cette filière est destine a des persones tres intelligent et travailleur car il sagit bien d la filière software engineering")   
     date=models.DateField(default="2021-09-03")
 
 

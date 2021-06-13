@@ -146,7 +146,7 @@ def trainer(request):
     recognizer.save(settings.BASE_DIR+'/ml/recognizer/trainingData.yml')
     cv2.destroyAllWindows()
 
-    return redirect('/')
+    return redirect('/admin/user')
 
 
 def detect(request):
