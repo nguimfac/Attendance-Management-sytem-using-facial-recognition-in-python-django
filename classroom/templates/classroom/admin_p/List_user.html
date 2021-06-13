@@ -6,7 +6,7 @@
             <a class="info-box-icon bg-aqua btn"><i class="fa fa-plus-circle "></i></a>
 
             <div class="info-box-content">
-                <span class="info-box-text">Add new Course</span>
+                <span class="info-box-text">Total Numbe of student</span>
                 <span class="info-box-number">{{count1}}<small></small></span>
             </div>
             <!-- /.info-box-content -->
@@ -95,10 +95,17 @@
                 </div>
             </div>
             <!-- /.box-header -->
+
+            <script>
+                $(document).ready(function() {
+                    $('#mytable').DataTable();
+                })
+            </script>
+
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-11">
-                        <table class="table table-bordered table-striped">
+                        <table class="table table-bordered table-striped" id="mytable">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>

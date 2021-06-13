@@ -117,12 +117,12 @@ def listUser(request):
     fill_name=fill.objects.all()
     count_User=User.objects.filter(is_student=True).count()
     listStudent= User.objects.filter(is_student=True).order_by('-date_joined')
-    paginator=Paginator(listStudent,per_page=10)
-    page_number=request.GET.get('page',1)
-    page_obj=paginator.get_page(page_number)
+    #paginator=Paginator(listStudent,per_page=10)
+    #page_number=request.GET.get('page',1)
+    #page_obj=paginator.get_page(page_number)
     
     
-    context={'listStudent':page_obj.object_list,'fill_name':fill_name,'count_User':count_User,'paginator':paginator,'page_number':int(page_number)}    
+    context={'listStudent':listStudent,'fill_name':fill_name,'count1':count_User}    
     return render(request,"classroom/admin_p/list_user.html",context)
 
 def updateStudent(request): 
@@ -137,6 +137,7 @@ def updateStudent(request):
         return redirect('/admin/listUser')
 
 def deleteStudent(request,id): 
+    
     User.objects.filter(id=id).delete()
     return redirect('/admin/listUser')
 def user(request):
