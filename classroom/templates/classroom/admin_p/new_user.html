@@ -1,139 +1,172 @@
-{% extends "classroom/admin_p/admin.html"%}
-{% load static%}
-{% block content %}
+{% extends "classroom/admin_p/admin.html"%} {% load static%} {% block content %}
 <div class="row">
     <div class="box box-info">
         <div class="box-header with-border">
 
-          {% if messages.success%}
-          {% for msg in messages %}
+            {% if messages.success%} {% for msg in messages %}
             <h5 class="alert alert-danger text-center" role="alert">{{msg}} <i class="fa fa-check-circle"></i> </h5>
-            {% endfor %}
-          {%else%}
-          {% for msg in messages %}
-          <h5 class="alert alert-success text-center" role="alert">{{msg}} <i class="glyphicon glyphicon-alert"></i> </h5>
-          {% endfor %}
-          {% endif%}
-<div><h4>New Student</h4>
-</div>
-          {%if not messages.success%}
-          {% for msg in messages%}
-        <div class="col-md-7  box-footer clearfix">
-          <button data-toggle="modal" data-target="#myModal" type="submit" class="rounded btn btn-sm col-md-offset-4 btn-flat pull-center"><img src="https://icons.iconarchive.com/icons/ampeross/qetto-2/64/camera-icon.png" alt=""> 
+            {% endfor %} {%else%} {% for msg in messages %}
+            <h5 class="alert alert-success text-center" role="alert">{{msg}} <i class="glyphicon glyphicon-alert"></i> </h5>
+            {% endfor %} {% endif%}
+            <div>
+                <h4>New Student</h4>
+            </div>
+            {%if not messages.success%} {% for msg in messages%}
+            <div class="col-md-7  box-footer clearfix">
+                <button data-toggle="modal" data-target="#myModal" type="submit" class="rounded btn btn-sm col-md-offset-4 btn-flat pull-center"><img src="https://icons.iconarchive.com/icons/ampeross/qetto-2/64/camera-icon.png" alt=""> 
           <br>
           <span> <h5>Yo must now submit the face info</h5></span>
           </button>
-        </div>
-       {% endfor%}
-       {%endif%}
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </div>
+            {% endfor%} {%endif%}
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
             </button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-          </div>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
         </div>
-         
+
         <!-- /.box-header -->
         <div class="box-body">
-        <div class="row">
-          <div class="col-md-7">
-            <div class="form-group">
-              <form  method="post" novalidate> {% csrf_token%}
-                <label for="username">First Name</label>
-                {{form.firstName}}
-                {% if form.firstName.errors%}
-                {% for error in  form.firstName.errors%}
-                   <small class="text-danger">{{error}}</small>
-                {%endfor%}
-              {% endif%}<br><br>
-                <label for="username">Last Name</label>
-                 {{form.lastName}}
-                 {% if form.lastName.errors %}
-                 {% for error in form.lastName.errors%}
-                 <small class="text-danger">{{error}}</small>
-                 {% endfor%}
-                 {%endif%}
-                <br><br>
-                <label for="username">Email</label>
-                {{form.email}}
-                {% if form.email.errors %}
-                {% for error in form.email.errors%}
-                <small class="text-danger">{{error}}</small>
-                {% endfor%}
-                {%endif%}
-                <br><br>
-                <label for="username">Phone number</label>
-                {{form.phoneNumber}}
-                {% if form.phoneNumber.errors %}
-                {% for error in form.phoneNumber.errors%}
-                <small class="text-danger">{{error}}</small>
-                {% endfor%}
-                {%endif%}
-                <br><br>
-                <label for="password">Password</label>
-                {{form.password}}
-                {% if form.password.errors %}
-                {% for error in form.password.errors%}
-                <small class="text-danger">{{error}}</small>
-                {% endfor%}
-                {%endif%} 
-                <br><br>
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="form-group">
+                        <form method="post" action="newStudent" novalidate> {% csrf_token%}
+                            <label for="username">First Name</label> {{form.firstName}} {% if form.firstName.errors%} {% for error in form.firstName.errors%}
+                            <small class="text-danger">{{error}}</small> {%endfor%} {% endif%}<br><br>
+                            <label for="username">Last Name</label> {{form.lastName}} {% if form.lastName.errors %} {% for error in form.lastName.errors%}
+                            <small class="text-danger">{{error}}</small> {% endfor%} {%endif%}
+                            <br><br>
+                            <label for="username">Email</label> {{form.email}} {% if form.email.errors %} {% for error in form.email.errors%}
+                            <small class="text-danger">{{error}}</small> {% endfor%} {%endif%}
+                            <br><br>
+                            <label for="username">Phone number</label> {{form.phoneNumber}} {% if form.phoneNumber.errors %} {% for error in form.phoneNumber.errors%}
+                            <small class="text-danger">{{error}}</small> {% endfor%} {%endif%}
+                            <br><br>
+                            <label for="password">Password</label> {{form.password}} {% if form.password.errors %} {% for error in form.password.errors%}
+                            <small class="text-danger">{{error}}</small> {% endfor%} {%endif%}
+                            <br><br>
 
-                <label for="">Speciality</label>
-                <select name="fill_id" id="fill" type="text" required class="form-control">
+                            <label for="">Speciality</label>
+                            <select name="fill_id" id="fill" type="text" required class="form-control">
                   {% for fill_name in fill_name%}
                   <option   value="{{fill_name.id_fill}}">{{fill_name.name}}</option>
                   {% endfor %}
-                </select> 
-                <div class="box-footer clearfix">
-                  <button type="reset"  class="btn btn-sm btn-danger btn-flat pull-left">Reset All</button>
-                  <button type="submit" onclick="incrementId()" class="btn btn-sm btn-primary btn-flat pull-right">Save  student </button>
+                </select>
+                            <div class="box-footer clearfix">
+                                <button type="reset" class="btn btn-sm btn-danger btn-flat pull-left">Reset All</button>
+                                <button type="submit" onclick="incrementId()" class="btn btn-sm btn-primary btn-flat pull-right">Save  student </button>
+                            </div>
+
+                        </form>
+
+                    </div>
                 </div>
-
-              </form>
-
-          </div>
-          </div>
-          <div class="col-md-4 b-1" style="margin-top: 90px;border-color:black">
-            <img src="{% static 'img/signin-image.jpg'%}"  class="col-md-offset-4 mr-3 col-xs-offset-4" alt=""><br><br>
-            <div class="text-uppercase text-center col-md-offset-3"><strong> form there i will be a student of this school </strong> </div>
-          </div>
-        </div>        
-          <!-- /.table-responsive -->
+                <div class="col-md-4 b-1" style="margin-top: 90px;border-color:black">
+                    <img src="{% static 'img/signin-image.jpg'%}" class="col-md-offset-4 mr-3 col-xs-offset-4" alt=""><br><br>
+                    <div class="text-uppercase text-center col-md-offset-3"><strong> form there i will be a student of this school </strong> </div>
+                </div>
+            </div>
+            <!-- /.table-responsive -->
         </div>
         <!-- /.box-body -->
 
         <!-- /.box-footer -->
-      </div>
+    </div>
 
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="myModalLabel">Input unique id and wait for webcam</h4>
+    <div class="box box-success">
+        <div class="box-header with-border">
+
+            {% if messages.success%} {% for msg in messages %}
+            <h5 class="alert alert-danger text-center" role="alert">{{msg}} <i class="fa fa-check-circle"></i> </h5>
+            {% endfor %} {%else%} {% for msg in messages %}
+            <h5 class="alert alert-success text-center" role="alert">{{msg}} <i class="glyphicon glyphicon-alert"></i> </h5>
+            {% endfor %} {% endif%}
+            <div>
+                <h4>New Lecturer</h4>
             </div>
-            <div class="modal-body">
-              <ul>
-                <li>For higher accuracy, make sure to stay in room with good lightning.</li>
-                <li>Please remove any type of accesories from face.</li>
-                <li>Make sure your face in clearly visible in camera.</li>
-                <li>Make sure your hair is not blocking the face.</li>
-                <li>Make sure no other faces are within the cam frame.
-              </ul>
-              <hr/>
-              <form action="/create_dataset" method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                  <label for="inputId">Enter Unique ID</label>
-                  <input type="text" class="form-control" readonly value={{max}} name="userId" id="inputId" placeholder="Enter Id">
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">Submit</button>
-              </form>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+          </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
             </div>
-          </div>
         </div>
-      </div>   
+
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="form-group">
+                        <form method="post" novalidate> {% csrf_token%}
+                            <label for="username">First Name</label> {{form.firstName}} {% if form.firstName.errors%} {% for error in form.firstName.errors%}
+                            <small class="text-danger">{{error}}</small> {%endfor%} {% endif%}<br><br>
+                            <label for="username">Last Name</label> {{form.lastName}} {% if form.lastName.errors %} {% for error in form.lastName.errors%}
+                            <small class="text-danger">{{error}}</small> {% endfor%} {%endif%}
+                            <br><br>
+                            <label for="username">Email</label> {{form.email}} {% if form.email.errors %} {% for error in form.email.errors%}
+                            <small class="text-danger">{{error}}</small> {% endfor%} {%endif%}
+                            <br><br>
+                            <label for="username">Phone number</label> {{form.phoneNumber}} {% if form.phoneNumber.errors %} {% for error in form.phoneNumber.errors%}
+                            <small class="text-danger">{{error}}</small> {% endfor%} {%endif%}
+                            <br><br>
+                            <label for="password">Password</label> {{form.password}} {% if form.password.errors %} {% for error in form.password.errors%}
+                            <small class="text-danger">{{error}}</small> {% endfor%} {%endif%}
+                            <br><br>
+
+                            <label for="">Speciality</label>
+                            <select name="fill_id" id="fill" type="text" required class="form-control">
+                {% for fill_name in fill_name%}
+                <option   value="{{fill_name.id_fill}}">{{fill_name.name}}</option>
+                {% endfor %}
+              </select>
+                            <div class="box-footer clearfix">
+                                <button type="reset" class="btn btn-sm btn-danger btn-flat pull-left">Reset All</button>
+                                <button type="submit" onclick="incrementId()" class="btn btn-sm btn-success btn-flat pull-right">Save  student </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+                <div class="col-md-4 b-1" style="margin-top: 90px;border-color:black">
+                    <img src="{% static 'img/signin-image.jpg'%}" class="col-md-offset-4 mr-3 col-xs-offset-4" alt=""><br><br>
+                    <div class="text-uppercase text-center col-md-offset-3"><strong> form there i will be a student of this school </strong> </div>
+                </div>
+            </div>
+            <!-- /.table-responsive -->
+        </div>
+        <!-- /.box-body -->
+
+        <!-- /.box-footer -->
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Input unique id and wait for webcam</h4>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li>For higher accuracy, make sure to stay in room with good lightning.</li>
+                        <li>Please remove any type of accesories from face.</li>
+                        <li>Make sure your face in clearly visible in camera.</li>
+                        <li>Make sure your hair is not blocking the face.</li>
+                        <li>Make sure no other faces are within the cam frame.
+                    </ul>
+                    <hr/>
+                    <form action="/create_dataset" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="inputId">Enter Unique ID</label>
+                            <input type="text" class="form-control" readonly value={{max}} name="userId" id="inputId" placeholder="Enter Id">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 {%endblock %}

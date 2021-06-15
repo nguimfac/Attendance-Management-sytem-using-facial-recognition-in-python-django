@@ -49,15 +49,18 @@ def admin_show(request):
 
 def show_lecturer(request):  
     if request.user.is_authenticated:
-        current_user =request.user.id
-        cursor =connection.cursor()
-        cursor.execute("SELECT name,C.id FROM classroom_user U, classroom_course C WHERE U.id=C.lecturer_id  and U.id="+str(current_user)+"")
-        result1 = cursor.fetchall() 
-        cursor.execute("SELECT DISTINCT F.name,F.id_fill from classroom_user U,classroom_course C,classroom_fill F where U.id=C.lecturer_id and F.id_fill=C.fill_id and U.id="+str(current_user)+"")
-        result2 = cursor.fetchall()
-        
-        context = {"displaydata":result1,'displaydata2':result2}
-        return render(request,"classroom/teachers/index.html",context)
+        if request.user.is_teacher:
+            current_user =request.user.id
+            cursor =connection.cursor()
+            cursor.execute("SELECT name,C.id FROM classroom_user U, classroom_course C WHERE U.id=C.lecturer_id  and U.id="+str(current_user)+"")
+            result1 = cursor.fetchall() 
+            cursor.execute("SELECT DISTINCT F.name,F.id_fill from classroom_user U,classroom_course C,classroom_fill F where U.id=C.lecturer_id and F.id_fill=C.fill_id and U.id="+str(current_user)+"")
+            result2 = cursor.fetchall()
+            
+            context = {"displaydata":result1,'displaydata2':result2}
+            return render(request,"classroom/teachers/index.html",context)
+        else: 
+            return render(request, 'classroom/home.html')   
     else:
         return render(request, 'classroom/home.html')
     
