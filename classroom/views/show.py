@@ -119,13 +119,18 @@ def course(request):
 def listUser(request):  
     fill_name=fill.objects.all()
     count_User=User.objects.filter(is_student=True).count()
+    act = 'none'
     listStudent= User.objects.filter(is_student=True).order_by('-date_joined')
+    listLecturer =User.objects.filter(is_teacher=True).order_by('-date_joined')
+    
+    
+    
     #paginator=Paginator(listStudent,per_page=10)
     #page_number=request.GET.get('page',1)
     #page_obj=paginator.get_page(page_number)
     
     
-    context={'listStudent':listStudent,'fill_name':fill_name,'count1':count_User}    
+    context={'listStudent':listStudent,'fill_name':fill_name,'count1':count_User,'listLecturer':listLecturer,'act':act}    
     return render(request,"classroom/admin_p/list_user.html",context)
 
 def updateStudent(request): 
@@ -143,6 +148,15 @@ def deleteStudent(request,id):
     
     User.objects.filter(id=id).delete()
     return redirect('/admin/listUser')
+
+def user_add(request): 
+    fill_name =fill.objects.all()
+    form =UserForm(request.POST)
+    max_id=User.objects.filter(is_student=True).last()
+    latest_val = max_id.id
+    context={'form':form,'fill_name':fill_name,'max':latest_val}
+    return render(request,"classroom/admin_p/new_user.html",context)
+
 def user(request):
     fill_name =fill.objects.all()
     max_id=User.objects.last()
@@ -166,7 +180,29 @@ def user(request):
             messages.error(request,"Verify please each field")
     context={'form':form,'users':user,'fill_name':fill_name,'max':latest_val}
     return render(request,"classroom/admin_p/new_user.html",context)
-
+ 
+def newLecturer(request):
+    form =UserForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            firstName = form.cleaned_data["firstName"]
+            lastName=form.cleaned_data["lastName"]
+            email=form.cleaned_data["email"]
+            phoneNumber=form.cleaned_data["phoneNumber"]
+            password =make_password(form.cleaned_data["password"])
+            activity = request.POST["activity"]
+            if(not User.objects.filter(email=email).exists()):
+                users= User.objects.create(password=password,username=firstName,last_name=lastName,email=email,is_active=1,is_teacher=True,fill_id=100,Phone_number=phoneNumber,activity=activity)
+                if(users is not None ):
+                    messages.success(request,"you record has been performed with success")
+                    return redirect('/admin/user')
+        else:
+            return render(request,"classroom/admin_p/new_user.html",{'form':form})   
+            messages.error(request,"Verify please each field")
+    context={'form':form,'users':user}
+    return render(request,"classroom/admin_p/new_lecturer.html",context) 
+     
+ 
 def add_course(request):  
     if request.method=="POST":
         code= request.POST['code']

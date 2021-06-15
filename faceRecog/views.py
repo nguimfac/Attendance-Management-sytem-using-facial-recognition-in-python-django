@@ -85,7 +85,7 @@ def create_dataset(request):
     # destroying all the windows
     cv2.destroyAllWindows()
 
-    return redirect('/')
+    return redirect('/admin/user')
 
 def trainer(request):
     '''

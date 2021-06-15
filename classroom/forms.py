@@ -6,16 +6,16 @@ from django.db import models
 from classroom.models import (Answer, Question, Student, StudentAnswer,
                               Subject, User,fill)
 class OrderFilter(forms.Form):
-    search = forms.CharField(label="Search",help_text="Search there",widget=forms.TextInput(attrs={'class': 'form-control'}))
+    search = forms.CharField(label="Search",help_text="Search there",widget=forms.TextInput(attrs={'class': 'form-control','placeholder':''}))
    
 
 class UserForm(forms.Form):
-    firstName = forms.CharField(label="FirstName",help_text="First Name",widget=forms.TextInput(attrs={'class': 'form-control'}))
-    lastName = forms.CharField(label="LastName",help_text="Last Name",widget=forms.TextInput(attrs={'class': 'form-control'}))
-    email = forms.EmailField(label="Email",help_text="Email",widget=forms.EmailInput(attrs={'class':'form-control'}))
-    phoneNumber =forms.CharField(min_length=3,max_length=15,help_text="Phone Number",label="Phone Number",widget=forms.NumberInput(attrs={'class':'form-control'}))
-    password =forms.CharField(min_length=8,help_text="Password",label="Mot de passe ",widget =forms.PasswordInput(attrs={'class':'form-control'}))
-
+    firstName = forms.CharField(label="FirstName",help_text="First Name",widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your firstName'}))
+    lastName = forms.CharField(label="LastName",help_text="Last Name",widget=forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your LastName'}))
+    email = forms.EmailField(label="Email",help_text="Email",widget=forms.EmailInput(attrs={'class':'form-control','placeholder':'Enter your Email'}))
+    phoneNumber =forms.CharField(min_length=3,max_length=15,help_text="Phone Number",label="Phone Number",widget=forms.NumberInput(attrs={'class':'form-control','placeholder':'Enter your Phone number'}))
+    password =forms.CharField(min_length=8,help_text="Password",label="Mot de passe ",widget =forms.PasswordInput(attrs={'class':'form-control','placeholder':'Enter your Password'}))
+    
 class TeacherSignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User

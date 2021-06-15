@@ -21,6 +21,7 @@ class User(AbstractUser):
     is_teacher = models.BooleanField(default=False)
     fill=models.ForeignKey(fill, on_delete=models.CASCADE,default=1)
     Phone_number = models.IntegerField(default=659994937)
+    activity = models.CharField(max_length=200, default=None)
 class faceInfo(models.Model):  
     faceid=models.AutoField(primary_key=True)
     user =models.ForeignKey(User, on_delete=models.CASCADE,unique=True)

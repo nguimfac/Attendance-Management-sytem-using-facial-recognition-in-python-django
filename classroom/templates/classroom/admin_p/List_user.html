@@ -6,7 +6,7 @@
             <a class="info-box-icon bg-aqua btn"><i class="fa fa-plus-circle "></i></a>
 
             <div class="info-box-content">
-                <span class="info-box-text">Total Numbe of student</span>
+                <span class="info-box-text">Total Number of student</span>
                 <span class="info-box-number">{{count1}}<small></small></span>
             </div>
             <!-- /.info-box-content -->
@@ -66,7 +66,7 @@
             <div class="box-header with-border">
                 <div class="row">
                     <div class="col-md-2" style="margin-top:8px">
-                        <h3 class="box-title">List of Student <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        <h3 class="box-title text-uppercase">List of Student <i class="fa fa-info-circle" aria-hidden="true"></i>
                         </h3>
                     </div>
 
@@ -92,9 +92,6 @@
             <!-- /.box-header -->
 
             <script>
-                $(document).ready(function() {
-                    $('#mytable').DataTable();
-                })
             </script>
 
             <div class="box-body">
@@ -168,15 +165,10 @@
             </div>
 
             <div class="col-md-2" style="margin-top:8px">
-                <h3 class="box-title">New Speciality <i class="fa fa-info-circle" aria-hidden="true"></i>
+                <h3 class="box-title text-uppercase">List of Lecturer<i class="fa fa-info-circle" aria-hidden="true"></i>
                 </h3>
             </div>
-            <div class="col-md-5 ">
-                <div class="input-group" style="margin-left:-70px">
-                    <input type="text" class="form-control" placeholder="Search course now" aria-describedby="basic-addon2">
-                    <span class="input-group-addon" id="basic-addon2"> <i class="fa fa-search"></i></span>
-                </div>
-            </div>
+
         </div>
 
         <div class="box-tools pull-right">
@@ -186,46 +178,50 @@
         </div>
     </div>
     <!-- /.box-header -->
-    <div class="box-body no-padding">
+    <div class="box-body">
         <div class="row">
-            <div class="col-md-9 col-sm-8">
-                <div class="pad">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">id</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">action1</th>
-                                <th scope="col">action2</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for fills in fill %}
-                            <tr>
-                                <th class="fill_id" scope="row">{{fills.id_fill}}</th>
-                                <td class="fill_name">{{fills.name}}</td>
-                                <td>
-                                    <button class="btn btn-primary fa fa-edit" id='edith' data-toggle="modal" data-target="#exampleModalCenteringe"></button>
-                                </td>
-                                <td>
-                                    <a href="delete_fill/{{fills.id_fill}}" onclick="return confirm('validate the action')" class="btn btn-danger fa fa-trash"></a>
-                                </td>
+            <div class="col-md-11">
+                <table class="table table-bordered table-striped" id="mytableLect">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">FIRST NAME</th>
+                            <th scope="col">lAST NAME</th>
+                            <th scope="col">EMAIL</th>
+                            <th scope="col">ACTIVITY DOMAIN</th>
+                            <th scope="col">PHONE NUMBER</th>
+                            <th scope="col">ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for listLecturer in listLecturer %}
+                        <tr>
+                            <th class="id" scope="row">{{listLecturer.id}}</th>
+                            <td class="firstName">{{listLecturer.username}}</td>
+                            <td class="lastName">{{listLecturer.last_name}}</td>
+                            <td class="email">{{listLecturer.email}} </td>
+                            <td class="fill">{{listLecturer.activity}}
+                            </td>
 
-                            </tr>
-                            {% endfor%}
-                        </tbody>
-                    </table>
-                    <div class="col-md-offset-10">
-                        <ul class="pagination">
-                            {% for i in paginator1.page_range%}
-                            <li class="page-item {% if i == page_number1 %} active {%endif%}">
-                                <a href="?page={{i}}" class=" page-link col-md-offset-5">{{i}}</a>
-                            </li>
-                            {%endfor%}
-                        </ul>
-                    </div>
-                    <div id="world-map-markers" style="height: 325px;"></div>
+                            <td class="phone">{{listLecturer.Phone_number}}</td>
+                            <td>
+                                <button class="btn btn-primary fa fa-edit" id='edit' data-toggle="modal" data-target="#exampleModalCenters"></button>
+                                <a href="deleteStudent/{{listStudents.id}}" onclick="return confirm('validate the action')" class="btn btn-danger fa fa-trash"></a>
+                            </td>
+                        </tr>
+                        {% endfor%}
+                    </tbody>
+                </table>
+                <div class="col-md-offset-11">
+                    <ul class="pagination">
+                        {% for i in paginator.page_range%}
+                        <li class="page-item {% if i == page_number %} active {%endif%}">
+                            <a href="?page={{i}}" class=" page-link col-md-offset-5">{{i}}</a>
+                        </li>
+                        {%endfor%}
+                    </ul>
                 </div>
+                <!-- /.chart-responsive -->
             </div>
             <!-- /.col -->
 
@@ -395,15 +391,17 @@
 
 
 <script>
-    $(document).on('click', '#edit', function() {
-        var _this = $(this).parents('tr');
-        $('#id').val(_this.find('.id').text());
-        $('#firstName').val(_this.find('.firstName').text());
-        $('#lastName').val(_this.find('.lastName').text());
-        $('#email').val((_this.find('.email').text()));
-        $('#fill').val(_this.find('.fill').text());
-        $('#phone').val(_this.find('.phone').text());
-    });
+    $(document).on('click', '#edit', function()
+
+        {
+            var _this = $(this).parents('tr');
+            $('#id').val(_this.find('.id').text());
+            $('#firstName').val(_this.find('.firstName').text());
+            $('#lastName').val(_this.find('.lastName').text());
+            $('#email').val((_this.find('.email').text()));
+            $('#fill').val(_this.find('.fill').text());
+            $('#phone').val(_this.find('.phone').text());
+        });
 
 
     $(document).on('click', '#edith', function() {
@@ -411,6 +409,10 @@
         $('#fill_id').val(_this.find('.fill_id').text());
         $('#fill_name').val(_this.find('.fill_name').text());
     });
+    $(document).ready(function() {
+        $('#mytable').DataTable();
+        $('#mytableLect').DataTable();
+    })
 </script>
 
 

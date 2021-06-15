@@ -1,0 +1,63 @@
+{% extends "classroom/admin_p/admin.html"%} {% load static%} {% block content %}
+<div class="box box-success">
+    <div class="box-header with-border">
+        {% if messages.success%} {% for msg in messages %}
+        <h5 class="alert alert-danger text-center" role="alert">{{msg}} <i class="fa fa-check-circle"></i> </h5>
+        {% endfor %} {%else%} {% for msg in messages %}
+        <h5 class="alert alert-success text-center" role="alert">{{msg}} <i class="glyphicon glyphicon-alert"></i> </h5>
+        {% endfor %} {% endif%}
+        <div>
+            <h4>New Lecturer</h4>
+        </div>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+      </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+        </div>
+    </div>
+
+    <!-- /.box-header -->
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="form-group">
+                    <form method="post" action="lecturer" novalidate> {% csrf_token%}
+                        <label for="username">First Name</label> {{form.firstName}} {% if form.firstName.errors%} {% for error in form.firstName.errors%}
+                        <small class="text-danger">{{error}}</small> {%endfor%} {% endif%}<br><br>
+                        <label for="username">Last Name</label> {{form.lastName}} {% if form.lastName.errors %} {% for error in form.lastName.errors%}
+                        <small class="text-danger">{{error}}</small> {% endfor%} {%endif%}
+                        <br><br>
+                        <label for="username">Email</label> {{form.email}} {% if form.email.errors %} {% for error in form.email.errors%}
+                        <small class="text-danger">{{error}}</small> {% endfor%} {%endif%}
+                        <br><br>
+                        <label for="username">Phone number</label> {{form.phoneNumber}} {% if form.phoneNumber.errors %} {% for error in form.phoneNumber.errors%}
+                        <small class="text-danger">{{error}}</small> {% endfor%} {%endif%}
+                        <br><br>
+                        <label for="password">Password</label> {{form.password}} {% if form.password.errors %} {% for error in form.password.errors%}
+                        <small class="text-danger">{{error}}</small> {% endfor%} {%endif%}
+                        <br><br>
+
+                        <label for="">Activity domain</label>
+                        <input type="text" name="activity" class="form-control" placeholder="Enter your activity domains" id="activity">
+
+                        <div class="box-footer clearfix">
+                            <button type="reset" class="btn btn-sm btn-danger btn-flat pull-left">Reset All</button>
+                            <button type="submit" onclick="incrementId()" class="btn btn-sm btn-success btn-flat pull-right">Save  student </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+            <div class="col-md-4 b-1" style="margin-top: 90px;border-color:black">
+                <img src="{% static 'img/signin-image.jpg'%}" class="col-md-offset-4 mr-3 col-xs-offset-4" alt=""><br><br>
+                <div class="text-uppercase text-center col-md-offset-3"><strong> form there i will be a lecturer of this school </strong> </div>
+            </div>
+        </div>
+        <!-- /.table-responsive -->
+    </div>
+    <!-- /.box-body -->
+
+    <!-- /.box-footer -->
+</div>
+{%endblock %}

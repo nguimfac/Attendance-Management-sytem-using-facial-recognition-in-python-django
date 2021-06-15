@@ -6,6 +6,7 @@ urlpatterns = [
       path('admin/', include(([
       path('', show.admin_show, name='admin'),
       path('course', show.course, name='course'),
+      path('lecturer',show.newLecturer, name='newLecturer'),
       path('newStudent',show.user, name='user'),
       path('listUser',show.listUser,name='listUser'),
       path('user',show.user, name='user'),
